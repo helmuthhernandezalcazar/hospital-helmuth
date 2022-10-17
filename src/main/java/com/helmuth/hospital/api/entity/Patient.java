@@ -15,13 +15,13 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String surname;
+    private String firstName;
+    private String lastName;
     @Column(unique = true)
     private String dni;
     private Date hospitalizationDate;
     private Date dischargeDate;
-    private String reason;
+    private String symptoms;
     private String medicalDiagnosis;
 
     @OneToOne(mappedBy = "patient")
