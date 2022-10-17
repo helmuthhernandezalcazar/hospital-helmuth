@@ -3,7 +3,6 @@ package com.helmuth.hospital.api.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,15 +10,17 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-public class BuildingBlock {
+public class MedicalFloor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String name;
-    private int numberOfFloors;
-    private String address;
+    private int floor;
 
-    @OneToMany(mappedBy = "buildingBlock", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<MedicalFloor> medicalFloors;
+    @ManyToOne()
+    private BuildingBlock buildingBlock;
+
+    @ManyToOne()
+    private MedicalSpecialty medicalSpecialty;
 }
