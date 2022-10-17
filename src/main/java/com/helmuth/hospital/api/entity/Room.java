@@ -24,4 +24,7 @@ public class Room {
 
     @ManyToOne
     private MedicalFloor medicalFloor;
+
+    @OneToOne
+    private Patient patient;
 }
