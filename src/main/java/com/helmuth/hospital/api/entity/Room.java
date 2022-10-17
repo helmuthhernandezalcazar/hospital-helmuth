@@ -12,21 +12,16 @@ import javax.persistence.*;
 @Entity
 @Table(
         uniqueConstraints = @UniqueConstraint(
-                name = "medicalFloor_buildingBlockAndFloor_uniqueConstraint",
-                columnNames = { "building_block_id", "floor" }
-        )
-)
-public class MedicalFloor {
+                name = "Room_nameAndMedicalFloor_uniqueConstraint",
+                columnNames = {  "name", "medical_floor_id" }
+        ))
+public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String name;
-    private int floor;
 
-    @ManyToOne()
-    private BuildingBlock buildingBlock;
-
-    @ManyToOne()
-    private MedicalSpecialty medicalSpecialty;
+    @ManyToOne
+    private MedicalFloor medicalFloor;
 }
