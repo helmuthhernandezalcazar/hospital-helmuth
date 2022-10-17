@@ -23,4 +23,7 @@ public class Measurement {
 
     @ManyToOne
     private Patient patient;
+
+    @ManyToOne
+    private Employee employee;
 }

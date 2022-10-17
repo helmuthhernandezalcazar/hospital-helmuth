@@ -21,4 +21,7 @@ public class Note {
     @ManyToOne
     private Patient patient;
 
+    @ManyToOne
+    private Employee employee;
+
 }
