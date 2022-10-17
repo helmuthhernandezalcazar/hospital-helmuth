@@ -20,6 +20,6 @@ public class BuildingBlock {
     private int numberOfFloors;
     private String address;
 
-    @OneToMany(mappedBy = "buildingBlock", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "buildingBlock", cascade = CascadeType.ALL)
     private List<MedicalFloor> medicalFloors;
 }

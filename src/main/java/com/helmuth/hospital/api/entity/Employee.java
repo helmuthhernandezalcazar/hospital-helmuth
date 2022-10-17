@@ -3,7 +3,6 @@ package com.helmuth.hospital.api.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,14 +10,14 @@ import java.util.Date;
 @Setter
 @Builder
 @Entity
-public class Note {
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String note;
-    private Date date;
-
-    @ManyToOne
-    private Patient patient;
-
+    private String name;
+    private String surname;
+    @Column(unique = true)
+    private String dni;
+    private String email;
+    private String employeeType;
 }

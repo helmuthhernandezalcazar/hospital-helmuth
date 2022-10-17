@@ -17,6 +17,8 @@ public class Patient {
     private Long id;
     private String name;
     private String surname;
+    @Column(unique = true)
+    private String dni;
     private Date hospitalizationDate;
     private Date dischargeDate;
     private String reason;
