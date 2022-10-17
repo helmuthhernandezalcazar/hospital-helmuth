@@ -3,6 +3,7 @@ package com.helmuth.hospital.api.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,4 +30,7 @@ public class MedicalFloor {
 
     @ManyToOne()
     private MedicalSpecialty medicalSpecialty;
+
+    @OneToMany(mappedBy = "medicalFloor", cascade = CascadeType.ALL)
+    private List<Room> rooms;
 }
