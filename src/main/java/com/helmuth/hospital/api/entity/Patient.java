@@ -19,6 +19,7 @@ public class Patient {
     private String lastName;
     @Column(unique = true)
     private String dni;
+    private String phoneNumber;
     private Date hospitalizationDate;
     private Date dischargeDate;
     private String symptoms;

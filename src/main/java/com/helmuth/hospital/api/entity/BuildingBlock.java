@@ -18,6 +18,7 @@ public class BuildingBlock {
     @Column(unique = true)
     private String name;
     private int numberOfFloors;
+    private String city;
     private String address;
 
     @OneToMany(mappedBy = "buildingBlock", cascade = CascadeType.ALL)

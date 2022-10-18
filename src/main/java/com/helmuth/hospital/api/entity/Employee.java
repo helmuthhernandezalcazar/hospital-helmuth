@@ -19,6 +19,7 @@ public class Employee {
     private String lastName;
     @Column(unique = true)
     private String dni;
+    private String phoneNumber;
     private String email;
     private String employeeType;
 
