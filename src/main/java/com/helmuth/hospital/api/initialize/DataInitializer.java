@@ -25,6 +25,8 @@ public class DataInitializer implements CommandLineRunner {
     private PatientRepository patientRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private NoteRepository noteRepository;
 
     private final int NUMBER_OF_PATIENTS = 16;
     private final int NUMBER_OF_EMPLOYEES = 8;
@@ -84,7 +86,7 @@ public class DataInitializer implements CommandLineRunner {
                 .generate();
 
         List<Patient> patients = new ArrayList<>();
-        for(int i = 0; i < NUMBER_OF_PATIENTS; i++){
+        for (int i = 0; i < NUMBER_OF_PATIENTS; i++) {
             Date hospitalitationDate = faker.date().past(365, TimeUnit.DAYS);
             Date dischargeDate = faker.date().past(180, TimeUnit.DAYS);
             Patient patient = Patient.builder()
@@ -93,7 +95,7 @@ public class DataInitializer implements CommandLineRunner {
                     .dni(faker.expression("#{bothify '########?', 'true'}"))
                     .phoneNumber(faker.expression("#{numerify '6## ### ###'}"))
                     .hospitalizationDate(hospitalitationDate)
-                    .dischargeDate(dischargeDate.getTime() > hospitalitationDate.getTime() ?  dischargeDate : null)
+                    .dischargeDate(dischargeDate.getTime() > hospitalitationDate.getTime() ? dischargeDate : null)
                     .symptoms(faker.medical().symptoms())
                     .medicalDiagnosis(faker.medical().diseaseName())
                     .room(rooms.get(i))
@@ -113,7 +115,7 @@ public class DataInitializer implements CommandLineRunner {
                 .generate();
 
         List<Employee> employees = new ArrayList<>();
-        for(int i = 0; i < NUMBER_OF_EMPLOYEES; i++){
+        for (int i = 0; i < NUMBER_OF_EMPLOYEES; i++) {
             Employee employee = Employee.builder()
                     .firstName(employeeNames.get(i))
                     .lastName(employeeLastNames.get(i))
@@ -124,5 +126,18 @@ public class DataInitializer implements CommandLineRunner {
             employees.add(employee);
         }
         employeeRepository.saveAll(employees);
+
+        List<Note> notes = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+                Note note = Note.builder()
+                        .note(faker.lorem().characters(20, 250))
+                        .date(faker.date().past(180, TimeUnit.DAYS))
+                        .patient(patients.get((int) (Math.random() * (patients.size() - 1))))
+                        .employee(employees.get((int) (Math.random() * (employees.size() - 1))))
+                        .build();
+                notes.add(note);
+        }
+        noteRepository.saveAll(notes);
     }
+
 }

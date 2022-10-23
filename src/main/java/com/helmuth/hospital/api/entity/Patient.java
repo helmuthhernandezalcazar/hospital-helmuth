@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +29,7 @@ public class Patient {
 
     @OneToOne()
     private Room room;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Note> notes;
 }
