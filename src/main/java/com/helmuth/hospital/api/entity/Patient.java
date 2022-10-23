@@ -1,6 +1,7 @@
 package com.helmuth.hospital.api.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +22,9 @@ public class Patient {
     @Column(unique = true)
     private String dni;
     private String phoneNumber;
+    @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm:ss")
     private Date hospitalizationDate;
+    @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm:ss")
     private Date dischargeDate;
     private String symptoms;
     private String triage;
