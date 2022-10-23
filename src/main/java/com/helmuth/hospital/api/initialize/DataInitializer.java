@@ -27,12 +27,21 @@ public class DataInitializer implements CommandLineRunner {
     private EmployeeRepository employeeRepository;
     @Autowired
     private NoteRepository noteRepository;
+    @Autowired
+    private MeasurementTypeRepository measurementTypeRepository;
 
     private final int NUMBER_OF_PATIENTS = 16;
     private final int NUMBER_OF_EMPLOYEES = 8;
     @Override
     public void run(String... args) throws Exception {
         Faker faker = new Faker(new Locale("es"));
+
+        MeasurementType bloodPressureSystolic = MeasurementType.builder().measurementType("Presión sanguinea sistólica").unit("mmHg").build();
+        MeasurementType bloodPressureDiastolic = MeasurementType.builder().measurementType("Presión sanguinea diastólica").unit("mmHg").build();
+        MeasurementType temperature = MeasurementType.builder().measurementType("Temperatura").unit("ºC").build();
+        MeasurementType weight = MeasurementType.builder().measurementType("Peso").unit("kg").build();
+        List<MeasurementType> measurementTypes = List.of(bloodPressureSystolic, bloodPressureDiastolic, temperature, weight);
+        measurementTypeRepository.saveAll(measurementTypes);
 
         MedicalSpecialty urology = MedicalSpecialty.builder().name("Urología").build();
         MedicalSpecialty surgery = MedicalSpecialty.builder().name("Cirugía").build();
