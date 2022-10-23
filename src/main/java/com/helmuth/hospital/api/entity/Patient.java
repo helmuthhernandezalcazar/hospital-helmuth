@@ -23,8 +23,9 @@ public class Patient {
     private Date hospitalizationDate;
     private Date dischargeDate;
     private String symptoms;
+    private String triage;
     private String medicalDiagnosis;
 
-    @OneToOne(mappedBy = "patient")
+    @OneToOne()
     private Room room;
 }

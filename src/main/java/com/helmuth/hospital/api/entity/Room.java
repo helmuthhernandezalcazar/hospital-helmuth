@@ -25,6 +25,6 @@ public class Room {
     @ManyToOne
     private MedicalFloor medicalFloor;
 
-    @OneToOne
+    @OneToOne(mappedBy = "room")
     private Patient patient;
 }

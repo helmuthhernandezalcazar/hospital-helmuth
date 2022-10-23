@@ -1,18 +1,15 @@
 package com.helmuth.hospital.api.initialize;
 
-import com.helmuth.hospital.api.entity.BuildingBlock;
-import com.helmuth.hospital.api.entity.MedicalFloor;
-import com.helmuth.hospital.api.entity.MedicalSpecialty;
-import com.helmuth.hospital.api.entity.Room;
-import com.helmuth.hospital.api.repository.BuildingBlockRepository;
-import com.helmuth.hospital.api.repository.MedicalFloorRepository;
-import com.helmuth.hospital.api.repository.MedicalSpecialtyRepository;
-import com.helmuth.hospital.api.repository.RoomRepository;
+import com.helmuth.hospital.api.entity.*;
+import com.helmuth.hospital.api.repository.*;
+import net.datafaker.Faker;
+import net.datafaker.Medical;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -24,16 +21,25 @@ public class DataInitializer implements CommandLineRunner {
     private MedicalFloorRepository medicalFloorRepository;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private PatientRepository patientRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    private final int NUMBER_OF_PATIENTS = 16;
+    private final int NUMBER_OF_EMPLOYEES = 8;
     @Override
     public void run(String... args) throws Exception {
+        Faker faker = new Faker(new Locale("es"));
+
         MedicalSpecialty urology = MedicalSpecialty.builder().name("Urología").build();
         MedicalSpecialty surgery = MedicalSpecialty.builder().name("Cirugía").build();
         MedicalSpecialty dermatology = MedicalSpecialty.builder().name("Dermatología").build();
         MedicalSpecialty neurology = MedicalSpecialty.builder().name("Neurología").build();
         medicalSpecialtyRepository.saveAll(List.of(urology, surgery, dermatology, neurology));
 
-        BuildingBlock buildingBlockA = BuildingBlock.builder().name("A").address("Calle de Alan Turing 1").numberOfFloors(3).build();
-        BuildingBlock buildingBlockB = BuildingBlock.builder().name("B").address("Calle de Alan Turing 3").numberOfFloors(3).build();
+        BuildingBlock buildingBlockA = BuildingBlock.builder().name("A").address(faker.address().streetAddress()).city(faker.address().city()).numberOfFloors(3).build();
+        BuildingBlock buildingBlockB = BuildingBlock.builder().name("B").address(faker.address().streetAddress()).city(faker.address().city()).numberOfFloors(3).build();
         buildingBlockRepository.saveAll(List.of(buildingBlockA, buildingBlockB));
 
         MedicalFloor medicalFloor1A = MedicalFloor.builder().name("1A").floor(1).buildingBlock(buildingBlockA).medicalSpecialty(urology).build();
@@ -61,10 +67,62 @@ public class DataInitializer implements CommandLineRunner {
         Room room206 = Room.builder().name("206").medicalFloor(medicalFloor2B).build();
         Room room207 = Room.builder().name("207").medicalFloor(medicalFloor2B).build();
         Room room208 = Room.builder().name("208").medicalFloor(medicalFloor2B).build();
-        roomRepository.saveAll(List.of(room101, room102, room103, room104,
+        List<Room> rooms = List.of(room101, room102, room103, room104,
                 room201, room202, room203, room204,
                 room105, room106, room107, room108,
-                room205, room206, room207, room208));
+                room205, room206, room207, room208);
+        roomRepository.saveAll(rooms);
 
+
+        List<String> names = faker
+                .collection(() -> faker.name().firstName())
+                .len(NUMBER_OF_PATIENTS)
+                .generate();
+        List<String> lastNames = faker
+                .collection(() -> faker.name().lastName())
+                .len(NUMBER_OF_PATIENTS)
+                .generate();
+
+        List<Patient> patients = new ArrayList<>();
+        for(int i = 0; i < NUMBER_OF_PATIENTS; i++){
+            Date hospitalitationDate = faker.date().past(365, TimeUnit.DAYS);
+            Date dischargeDate = faker.date().past(180, TimeUnit.DAYS);
+            Patient patient = Patient.builder()
+                    .firstName(names.get(i))
+                    .lastName(lastNames.get(i))
+                    .dni(faker.expression("#{bothify '########?', 'true'}"))
+                    .phoneNumber(faker.expression("#{numerify '6## ### ###'}"))
+                    .hospitalizationDate(hospitalitationDate)
+                    .dischargeDate(dischargeDate.getTime() > hospitalitationDate.getTime() ?  dischargeDate : null)
+                    .symptoms(faker.medical().symptoms())
+                    .medicalDiagnosis(faker.medical().diseaseName())
+                    .room(rooms.get(i))
+                    .build();
+            patients.add(patient);
+        }
+        patientRepository.saveAll(patients);
+
+
+        List<String> employeeNames = faker
+                .collection(() -> faker.name().firstName())
+                .len(NUMBER_OF_EMPLOYEES)
+                .generate();
+        List<String> employeeLastNames = faker
+                .collection(() -> faker.name().lastName())
+                .len(NUMBER_OF_EMPLOYEES)
+                .generate();
+
+        List<Employee> employees = new ArrayList<>();
+        for(int i = 0; i < NUMBER_OF_EMPLOYEES; i++){
+            Employee employee = Employee.builder()
+                    .firstName(employeeNames.get(i))
+                    .lastName(employeeLastNames.get(i))
+                    .dni(faker.expression("#{bothify '########?', 'true'}"))
+                    .phoneNumber(faker.expression("#{numerify '6## ### ###'}"))
+                    .email((employeeNames.get(i) + "." + employeeLastNames.get(i)).toLowerCase().trim() + "@helmuthhospital.com")
+                    .build();
+            employees.add(employee);
+        }
+        employeeRepository.saveAll(employees);
     }
 }
