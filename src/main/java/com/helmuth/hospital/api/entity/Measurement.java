@@ -15,11 +15,11 @@ public class Measurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String type;
     private Double measurementValue;
-    private String unit;
     private Date date;
+
+    @ManyToOne
+    private MeasurementType measurementType;
 
     @ManyToOne
     private Patient patient;
