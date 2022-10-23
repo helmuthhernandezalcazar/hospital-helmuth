@@ -29,9 +29,12 @@ public class DataInitializer implements CommandLineRunner {
     private NoteRepository noteRepository;
     @Autowired
     private MeasurementTypeRepository measurementTypeRepository;
+    @Autowired
+    private MeasurementRepository measurementRepository;
 
     private final int NUMBER_OF_PATIENTS = 16;
     private final int NUMBER_OF_EMPLOYEES = 8;
+
     @Override
     public void run(String... args) throws Exception {
         Faker faker = new Faker(new Locale("es"));
@@ -40,7 +43,7 @@ public class DataInitializer implements CommandLineRunner {
         MeasurementType bloodPressureDiastolic = MeasurementType.builder().measurementType("Presión sanguinea diastólica").unit("mmHg").build();
         MeasurementType temperature = MeasurementType.builder().measurementType("Temperatura").unit("ºC").build();
         MeasurementType weight = MeasurementType.builder().measurementType("Peso").unit("kg").build();
-        List<MeasurementType> measurementTypes = List.of(bloodPressureSystolic, bloodPressureDiastolic, temperature, weight);
+        List<MeasurementType> measurementTypes = new ArrayList<>(List.of(bloodPressureSystolic, bloodPressureDiastolic, temperature, weight));
         measurementTypeRepository.saveAll(measurementTypes);
 
         MedicalSpecialty urology = MedicalSpecialty.builder().name("Urología").build();
@@ -138,15 +141,28 @@ public class DataInitializer implements CommandLineRunner {
 
         List<Note> notes = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-                Note note = Note.builder()
-                        .note(faker.lorem().characters(20, 250))
-                        .date(faker.date().past(180, TimeUnit.DAYS))
-                        .patient(patients.get((int) (Math.random() * (patients.size() - 1))))
-                        .employee(employees.get((int) (Math.random() * (employees.size() - 1))))
-                        .build();
-                notes.add(note);
+            Note note = Note.builder()
+                    .note(faker.lorem().characters(20, 250))
+                    .date(faker.date().past(180, TimeUnit.DAYS))
+                    .patient(patients.get((int) (Math.random() * (patients.size() - 1))))
+                    .employee(employees.get((int) (Math.random() * (employees.size() - 1))))
+                    .build();
+            notes.add(note);
         }
         noteRepository.saveAll(notes);
+
+        List<Measurement> measurements = new ArrayList<>();
+        for (int i = 0; i < 60; i++) {
+            Measurement measurement = Measurement.builder()
+                    .measurementValue(Math.random() * 100)
+                    .date(faker.date().past(180, TimeUnit.DAYS))
+                    .measurementType(measurementTypes.get((int) (Math.random() * (measurementTypes.size() - 1))))
+                    .patient(patients.get((int) (Math.random() * (patients.size() - 1))))
+                    .employee(employees.get((int) (Math.random() * (employees.size() - 1))))
+                    .build();
+            measurements.add(measurement);
+        }
+        measurementRepository.saveAll(measurements);
     }
 
 }

@@ -35,4 +35,7 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient")
     private List<Note> notes;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Measurement> measurements;
 }
