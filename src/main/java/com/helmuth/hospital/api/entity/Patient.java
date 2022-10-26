@@ -27,10 +27,11 @@ public class Patient {
     @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm:ss")
     private Date dischargeDate;
     private String symptoms;
-    private String triage;
     private String medicalDiagnosis;
 
-    @OneToOne()
+    @ManyToOne
+    private Triage triage;
+    @OneToOne
     private Room room;
 
     @OneToMany(mappedBy = "patient")
