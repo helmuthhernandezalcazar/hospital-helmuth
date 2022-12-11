@@ -34,9 +34,9 @@ public class Patient {
     @OneToOne
     private Room room;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
     private List<Note> notes;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
     private List<Measurement> measurements;
 }

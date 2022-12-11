@@ -31,6 +31,8 @@ public class DataInitializer implements CommandLineRunner {
     private MeasurementTypeRepository measurementTypeRepository;
     @Autowired
     private MeasurementRepository measurementRepository;
+    @Autowired
+    private TriageRepository triageRepository;
 
     private final int NUMBER_OF_PATIENTS = 16;
     private final int NUMBER_OF_EMPLOYEES = 8;
@@ -45,6 +47,20 @@ public class DataInitializer implements CommandLineRunner {
         MeasurementType weight = MeasurementType.builder().measurementType("Peso").unit("kg").build();
         List<MeasurementType> measurementTypes = new ArrayList<>(List.of(bloodPressureSystolic, bloodPressureDiastolic, temperature, weight));
         measurementTypeRepository.saveAll(measurementTypes);
+
+        Triage triage1 = Triage.builder().level(1).name("Atención inmediata").timeToBeAttended("0 minutos").description("Corre peligro de perder la vida")
+                .examples("paro cardíaco, dificultad respiratoria aguda, traumatismo severo").build();
+        Triage triage2 = Triage.builder().level(2).name("Muy urgente").timeToBeAttended("< 15 minutos").description("Situación de alto riesgo")
+                .examples("quemaduras, hemorragias, exposición a tóxicos, letargia, dolor abdominal agudo, consufión").build();
+        Triage triage3 = Triage.builder().level(3).name("Urgente").timeToBeAttended("15-60 minutos").description("No hay riesgo inminente pero presenta alteración aguda en el estado de salud")
+                .examples("fiebre, vómito y diarrea con deshidratación, traumas menores").build();
+        Triage triage4 = Triage.builder().level(4).name("Urgencia menor").timeToBeAttended("60-120 minutos").description("Requiere de exámenes o consultas para iniciar tratamiento o cambio por evolución en el estado de salud previo")
+                .examples("infección urinaria o viral sin mejoría, paciente post operatorio de más de 1 día que pueda presentar alguna complicación").build();
+        Triage triage5 = Triage.builder().level(5).name("No urgente").timeToBeAttended("120-240 minutos").description("No requiere atención en el servicio de urgencias, puede ser atendido")
+                .examples("resfriado, congestión, dolor leve, enfermedad crónica").build();
+        List<Triage> triages = new ArrayList<>(List.of(triage1, triage2, triage3, triage4, triage5));
+        triageRepository.saveAll(triages);
+
 
         MedicalSpecialty urology = MedicalSpecialty.builder().name("Urología").build();
         MedicalSpecialty surgery = MedicalSpecialty.builder().name("Cirugía").build();
@@ -100,7 +116,7 @@ public class DataInitializer implements CommandLineRunner {
         List<Patient> patients = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_PATIENTS; i++) {
             Date hospitalitationDate = faker.date().past(365, TimeUnit.DAYS);
-            Date dischargeDate = faker.date().past(180, TimeUnit.DAYS);
+            Date dischargeDate = faker.date().past(365, TimeUnit.DAYS);
             Patient patient = Patient.builder()
                     .firstName(names.get(i))
                     .lastName(lastNames.get(i))
@@ -111,6 +127,7 @@ public class DataInitializer implements CommandLineRunner {
                     .symptoms(faker.medical().symptoms())
                     .medicalDiagnosis(faker.medical().diseaseName())
                     .room(rooms.get(i))
+                    .triage(triages.get((int) (Math.random() * (triages.size() - 1))))
                     .build();
             patients.add(patient);
         }
