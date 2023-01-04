@@ -126,7 +126,7 @@ public class DataInitializer implements CommandLineRunner {
                     .dischargeDate(dischargeDate.getTime() > hospitalitationDate.getTime() ? dischargeDate : null)
                     .symptoms(faker.medical().symptoms())
                     .medicalDiagnosis(faker.medical().diseaseName())
-                    .room(rooms.get(i))
+                    .room(dischargeDate.getTime() > hospitalitationDate.getTime() ? null : rooms.get(i))
                     .triage(triages.get((int) (Math.random() * (triages.size() - 1))))
                     .build();
             patients.add(patient);
