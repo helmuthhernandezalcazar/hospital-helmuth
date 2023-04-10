@@ -3,12 +3,18 @@ package com.helmuth.hospital.api.initialize;
 import com.helmuth.hospital.api.entity.*;
 import com.helmuth.hospital.api.repository.*;
 import net.datafaker.Faker;
-import net.datafaker.Medical;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -33,6 +39,10 @@ public class DataInitializer implements CommandLineRunner {
     private MeasurementRepository measurementRepository;
     @Autowired
     private TriageRepository triageRepository;
+    @Autowired
+    private UserDetailsManager userDetailsManager;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final int NUMBER_OF_PATIENTS = 16;
     private final int NUMBER_OF_EMPLOYEES = 8;
@@ -40,6 +50,26 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Faker faker = new Faker(new Locale("es"));
+
+        UserDetails user1 = User
+                .withUsername("helmuth")
+                .password(passwordEncoder.encode("password"))
+                .roles("USER")
+                .build();
+        UserDetails user2 = User
+                .withUsername("david")
+                .password(passwordEncoder.encode("password"))
+                .roles("USER")
+                .build();
+        UserDetails user3 = User
+                .withUsername("hernandez")
+                .password(passwordEncoder.encode("password"))
+                .roles("ADMIN")
+                .build();
+
+
+        List<UserDetails> users = List.of(user1, user2, user3);
+        users.forEach(user -> userDetailsManager.createUser(user));
 
         MeasurementType bloodPressureSystolic = MeasurementType.builder().measurementType("Presión sanguinea sistólica").unit("mmHg").build();
         MeasurementType bloodPressureDiastolic = MeasurementType.builder().measurementType("Presión sanguinea diastólica").unit("mmHg").build();
