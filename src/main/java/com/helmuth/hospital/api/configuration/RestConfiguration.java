@@ -1,5 +1,6 @@
 package com.helmuth.hospital.api.configuration;
 
+import com.helmuth.hospital.api.projection.MeasurementProjection;
 import com.helmuth.hospital.api.projection.PatientProjection;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -10,6 +11,6 @@ public class RestConfiguration implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration (RepositoryRestConfiguration repositoryRestConfiguration, CorsRegistry cors) {
         repositoryRestConfiguration.getProjectionConfiguration()
-                .addProjection(PatientProjection.class);
+                .addProjection(PatientProjection.class).addProjection(MeasurementProjection.class);
     }
 }
