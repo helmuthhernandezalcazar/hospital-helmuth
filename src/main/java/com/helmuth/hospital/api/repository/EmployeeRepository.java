@@ -9,4 +9,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource
 @CrossOrigin("*")
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    Employee findByEmail(String email);
+
 }

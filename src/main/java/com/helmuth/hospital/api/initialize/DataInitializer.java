@@ -186,6 +186,15 @@ public class DataInitializer implements CommandLineRunner {
         }
         employeeRepository.saveAll(employees);
 
+        //for each employee an user is created
+        employees.forEach(employee -> {
+            UserDetails userDetails = User.withUsername(employee.getEmail())
+                    .roles("USER")
+                    .password(passwordEncoder.encode("password"))
+                    .build();
+            userDetailsManager.createUser(userDetails);
+        });
+
         List<Note> notes = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             Note note = Note.builder()

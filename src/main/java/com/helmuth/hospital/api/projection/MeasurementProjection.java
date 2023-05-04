@@ -16,4 +16,7 @@ public interface MeasurementProjection {
     String getMeasurementType();
     @Value("#{target.measurementType.unit}")
     String getMeasurementTypeUnit();
+
+    @Value("#{target.employee.email}")
+    String getEmployeeEmail();
 }
