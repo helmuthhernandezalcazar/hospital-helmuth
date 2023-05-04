@@ -25,5 +25,6 @@ public interface PatientProjection {
     String getTriageLevel();
     @Value("#{target.room?.name != null ? target.room.name : (target.dischargeDate != null ? '' : 'Sala de espera')}")
     String getRoomName();
-
+    @Value("#{target.room != null ? target.room.medicalFloor.medicalSpecialty.name: ''}")
+    String getRoomMedicalSpecialty();
 }
