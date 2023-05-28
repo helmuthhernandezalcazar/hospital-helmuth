@@ -25,7 +25,6 @@ public class LoginController {
 
     @GetMapping("/login")
     ResponseEntity<Employee> loginget(Authentication authentication){
-
         return ResponseEntity.status(HttpStatus.OK).body(employeeRepository.findByEmail(authentication.getName()));
     }
 }

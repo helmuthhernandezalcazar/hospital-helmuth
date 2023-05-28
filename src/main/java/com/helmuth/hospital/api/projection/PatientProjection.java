@@ -17,7 +17,7 @@ public interface PatientProjection {
     String getLastName();
     String getDni();
     String getPhoneNumber();
-    Date getHospitalizationDate();
+    Date getRegisterDate();
     Date getDischargeDate();
     String getSymptoms();
     String getMedicalDiagnosis();

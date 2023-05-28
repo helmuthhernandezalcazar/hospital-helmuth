@@ -145,18 +145,19 @@ public class DataInitializer implements CommandLineRunner {
 
         List<Patient> patients = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_PATIENTS; i++) {
-            Date hospitalitationDate = faker.date().past(365, TimeUnit.DAYS);
+            Date registerDate = faker.date().past(365, TimeUnit.DAYS);
             Date dischargeDate = faker.date().past(365, TimeUnit.DAYS);
             Patient patient = Patient.builder()
                     .firstName(names.get(i))
                     .lastName(lastNames.get(i))
                     .dni(faker.expression("#{bothify '########?', 'true'}"))
                     .phoneNumber(faker.expression("#{numerify '6## ### ###'}"))
-                    .hospitalizationDate(hospitalitationDate)
-                    .dischargeDate(dischargeDate.getTime() > hospitalitationDate.getTime() ? dischargeDate : null)
+                    .registerDate(registerDate)
+                    .dischargeDate(dischargeDate.getTime() > registerDate.getTime() ? dischargeDate : null)
+                    .discharged(dischargeDate.getTime() > registerDate.getTime())
                     .symptoms(faker.medical().symptoms())
                     .medicalDiagnosis(faker.medical().diseaseName())
-                    .room(dischargeDate.getTime() > hospitalitationDate.getTime() ? null : rooms.get(i))
+                    .room(dischargeDate.getTime() > registerDate.getTime() ? null : rooms.get(i))
                     .triage(triages.get((int) (Math.random() * (triages.size() - 1))))
                     .build();
             patients.add(patient);

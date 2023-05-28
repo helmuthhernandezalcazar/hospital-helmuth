@@ -19,13 +19,13 @@ public class Patient {
     private Long id;
     private String firstName;
     private String lastName;
-    @Column(unique = true)
     private String dni;
     private String phoneNumber;
     @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm:ss")
-    private Date hospitalizationDate;
+    private Date registerDate;
     @DateTimeFormat(pattern = "dd-MM-yyyy'T'HH:mm:ss")
     private Date dischargeDate;
+    private Boolean discharged;
     private String symptoms;
     private String medicalDiagnosis;
 
