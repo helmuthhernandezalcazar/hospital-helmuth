@@ -15,7 +15,7 @@ public class Measurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double measurementValue;
+    private String measurementValue;
     private Date date;
 
     @ManyToOne

@@ -10,7 +10,7 @@ import java.util.Date;
 @Projection(name = "measurementProjection",
 types = {Measurement.class})
 public interface MeasurementProjection {
-    Double getMeasurementValue();
+    String getMeasurementValue();
     Date getDate();
     @Value("#{target.measurementType.measurementType}")
     String getMeasurementType();

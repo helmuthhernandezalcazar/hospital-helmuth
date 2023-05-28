@@ -71,11 +71,13 @@ public class DataInitializer implements CommandLineRunner {
         List<UserDetails> users = List.of(user1, user2, user3);
         users.forEach(user -> userDetailsManager.createUser(user));
 
+
+        MeasurementType bloodPressure = MeasurementType.builder().measurementType("Presión sanguinea").unit("mmHg").build();
         MeasurementType bloodPressureSystolic = MeasurementType.builder().measurementType("Presión sanguinea sistólica").unit("mmHg").build();
         MeasurementType bloodPressureDiastolic = MeasurementType.builder().measurementType("Presión sanguinea diastólica").unit("mmHg").build();
         MeasurementType temperature = MeasurementType.builder().measurementType("Temperatura").unit("ºC").build();
         MeasurementType weight = MeasurementType.builder().measurementType("Peso").unit("kg").build();
-        List<MeasurementType> measurementTypes = new ArrayList<>(List.of(bloodPressureSystolic, bloodPressureDiastolic, temperature, weight));
+        List<MeasurementType> measurementTypes = new ArrayList<>(List.of(bloodPressure,bloodPressureSystolic, bloodPressureDiastolic, temperature, weight));
         measurementTypeRepository.saveAll(measurementTypes);
 
         Triage triage1 = Triage.builder().level(1).name("Atención inmediata").timeToBeAttended("0 minutos").description("Corre peligro de perder la vida")
@@ -211,7 +213,7 @@ public class DataInitializer implements CommandLineRunner {
         List<Measurement> measurements = new ArrayList<>();
         for (int i = 0; i < 60; i++) {
             Measurement measurement = Measurement.builder()
-                    .measurementValue(Math.random() * 100)
+                    .measurementValue(String.valueOf(Math.random() * 100))
                     .date(faker.date().past(180, TimeUnit.DAYS))
                     .measurementType(measurementTypes.get((int) (Math.random() * (measurementTypes.size() - 1))))
                     .patient(patients.get((int) (Math.random() * (patients.size() - 1))))
