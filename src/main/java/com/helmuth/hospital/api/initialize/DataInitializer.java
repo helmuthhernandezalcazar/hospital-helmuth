@@ -73,11 +73,9 @@ public class DataInitializer implements CommandLineRunner {
 
 
         MeasurementType bloodPressure = MeasurementType.builder().measurementType("Presión sanguinea").unit("mmHg").build();
-        MeasurementType bloodPressureSystolic = MeasurementType.builder().measurementType("Presión sanguinea sistólica").unit("mmHg").build();
-        MeasurementType bloodPressureDiastolic = MeasurementType.builder().measurementType("Presión sanguinea diastólica").unit("mmHg").build();
         MeasurementType temperature = MeasurementType.builder().measurementType("Temperatura").unit("ºC").build();
         MeasurementType weight = MeasurementType.builder().measurementType("Peso").unit("kg").build();
-        List<MeasurementType> measurementTypes = new ArrayList<>(List.of(bloodPressure,bloodPressureSystolic, bloodPressureDiastolic, temperature, weight));
+        List<MeasurementType> measurementTypes = new ArrayList<>(List.of(bloodPressure,temperature, weight));
         measurementTypeRepository.saveAll(measurementTypes);
 
         Triage triage1 = Triage.builder().level(1).name("Atención inmediata").timeToBeAttended("0 minutos").description("Corre peligro de perder la vida")
@@ -94,19 +92,24 @@ public class DataInitializer implements CommandLineRunner {
         triageRepository.saveAll(triages);
 
 
-        MedicalSpecialty urology = MedicalSpecialty.builder().name("Urología").build();
-        MedicalSpecialty surgery = MedicalSpecialty.builder().name("Cirugía").build();
-        MedicalSpecialty dermatology = MedicalSpecialty.builder().name("Dermatología").build();
-        MedicalSpecialty neurology = MedicalSpecialty.builder().name("Neurología").build();
-        medicalSpecialtyRepository.saveAll(List.of(urology, surgery, dermatology, neurology));
+        MedicalSpecialty cardiology = MedicalSpecialty.builder().name("Cardiología")
+                .description("Departamento especializado en el cuidado y tratamiento de enfermedades del corazón. Se brinda atención médica a pacientes con afecciones cardiovasculares, desde problemas menores hasta condiciones graves").build();
+        MedicalSpecialty pulmonology = MedicalSpecialty.builder().name("Neumología")
+                .description("Departamento médico especializado en el diagnóstico y tratamiento de enfermedades respiratorias. Se brinda atención médica a pacientes con afecciones como el asma, la enfermedad pulmonar obstructiva crónica (EPOC), la neumonía, la fibrosis pulmonar y otras enfermedades pulmonares y respiratorias.").build();
+        MedicalSpecialty urology = MedicalSpecialty.builder().name("Urología")
+                .description("Departamento médico especializado en el diagnóstico y tratamiento de trastornos del sistema urinario en hombres y mujeres, así como de enfermedades del sistema reproductor masculino. " +
+                        "Se brinda atención médica integral para abordar condiciones como infecciones del tracto urinario, cálculos renales, enfermedades de la próstata, disfunciones sexuales, enfermedades de transmisión sexual y cánceres urológicos").build();
+        MedicalSpecialty neurology = MedicalSpecialty.builder().name("Neurología")
+                .description("Departamento médico especializado en el diagnóstico y tratamiento de trastornos del sistema nervioso. Se brinda atención médica a pacientes con afecciones neurológicas como enfermedades cerebrovasculares, trastornos del movimiento, epilepsia, enfermedades neurodegenerativas, migrañas, trastornos del sueño y lesiones en el sistema nervioso").build();
+        medicalSpecialtyRepository.saveAll(List.of(cardiology, pulmonology, urology, neurology));
 
         BuildingBlock buildingBlockA = BuildingBlock.builder().name("A").address(faker.address().streetAddress()).city(faker.address().city()).numberOfFloors(3).build();
         BuildingBlock buildingBlockB = BuildingBlock.builder().name("B").address(faker.address().streetAddress()).city(faker.address().city()).numberOfFloors(3).build();
         buildingBlockRepository.saveAll(List.of(buildingBlockA, buildingBlockB));
 
-        MedicalFloor medicalFloor1A = MedicalFloor.builder().name("1A").floor(1).buildingBlock(buildingBlockA).medicalSpecialty(urology).build();
-        MedicalFloor medicalFloor2A = MedicalFloor.builder().name("2A").floor(2).buildingBlock(buildingBlockA).medicalSpecialty(surgery).build();
-        MedicalFloor medicalFloor1B = MedicalFloor.builder().name("1B").floor(1).buildingBlock(buildingBlockB).medicalSpecialty(dermatology).build();
+        MedicalFloor medicalFloor1A = MedicalFloor.builder().name("1A").floor(1).buildingBlock(buildingBlockA).medicalSpecialty(cardiology).build();
+        MedicalFloor medicalFloor2A = MedicalFloor.builder().name("2A").floor(2).buildingBlock(buildingBlockA).medicalSpecialty(pulmonology).build();
+        MedicalFloor medicalFloor1B = MedicalFloor.builder().name("1B").floor(1).buildingBlock(buildingBlockB).medicalSpecialty(urology).build();
         MedicalFloor medicalFloor2B = MedicalFloor.builder().name("2B").floor(2).buildingBlock(buildingBlockB).medicalSpecialty(neurology).build();
         medicalFloorRepository.saveAll(List.of(medicalFloor1A, medicalFloor2A, medicalFloor1B, medicalFloor2B));
 
