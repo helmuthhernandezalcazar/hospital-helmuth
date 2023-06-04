@@ -25,4 +25,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     List<Patient> findByDni(String dni);
 
+    // Filters
+    Page<Patient> findByFirstNameContainsIgnoreCaseOrLastNameContainsIgnoreCaseOrDniContainsIgnoreCase(Pageable pageable, String firstName, String lastName, String dni);
+
 }
