@@ -25,22 +25,32 @@ public class MeasurementValidator implements Validator {
         String measurementValue = measurement.getMeasurementValue();
         switch (measurementType) {
             case "Temperatura":
-                double temperatureValue = Double.parseDouble(measurementValue);
-                if (temperatureValue < 20 || temperatureValue > 50)
-                    throw new FormDataException("Error in temperature value");
+                try{
+                    double temperatureValue = Double.parseDouble(measurementValue);
+                    if (temperatureValue < 20 || temperatureValue > 50)
+                        throw new FormDataException("Error en la temperatura introducida");
+                }catch (NumberFormatException e){
+                    throw new FormDataException("La temperatura debe ser un número");
+                }
+
                 break;
             case "Peso":
-                double weightValue = Double.parseDouble(measurementValue);
-                if (weightValue < 0 || weightValue > 999)
-                    throw new FormDataException("Error in weight value");
+                try{
+                    double weightValue = Double.parseDouble(measurementValue);
+                    if (weightValue < 0 || weightValue > 999)
+                        throw new FormDataException("Error en el peso introducido");
+                }catch (NumberFormatException e){
+                    throw new FormDataException("El peso debe ser un número");
+                }
+
                 break;
             case "Presión sanguinea":
                 if (!measurementValue.matches("[0-9]{1,3}/[0-9]{1,3}"))
-                    throw new FormDataException("Error in blood pressure format");
+                    throw new FormDataException("Error en el formato de presión sanguínea. Ejemplo correcto: 120/80");
                 String[] pressures = measurementValue.split("/");
                 if (Integer.parseInt(pressures[0]) < 0 || Integer.parseInt(pressures[0]) > 240 ||
                         Integer.parseInt(pressures[1]) < 0 || Integer.parseInt(pressures[1]) > 240)
-                    throw new FormDataException("Error in blood pressure value");
+                    throw new FormDataException("Error en los valores de la presión sanguínea");
                 break;
             default:
                 break;

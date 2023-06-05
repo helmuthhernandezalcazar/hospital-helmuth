@@ -19,6 +19,7 @@ public interface PatientProjection {
     String getPhoneNumber();
     Date getRegisterDate();
     Date getDischargeDate();
+    Boolean getDischarged();
     String getSymptoms();
     String getMedicalDiagnosis();
     @Value("#{target.triage.level}")
@@ -27,4 +28,6 @@ public interface PatientProjection {
     String getRoomName();
     @Value("#{target.room != null ? target.room.medicalFloor.medicalSpecialty.name: ''}")
     String getRoomMedicalSpecialty();
+    @Value("#{target.room != null ? target.room.medicalFloor.name: ''}")
+    String getRoomMedicalFloor();
 }

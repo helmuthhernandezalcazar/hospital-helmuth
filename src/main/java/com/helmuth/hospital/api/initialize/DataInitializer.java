@@ -186,7 +186,7 @@ public class DataInitializer implements CommandLineRunner {
                     .lastName(employeeLastNames.get(i))
                     .dni(faker.expression("#{bothify '########?', 'true'}"))
                     .phoneNumber(faker.expression("#{numerify '6## ### ###'}"))
-                    .email((employeeNames.get(i) + "." + employeeLastNames.get(i)).toLowerCase().trim() + "@helmuthhospital.com")
+                    .email((employeeNames.get(i) + "." + employeeLastNames.get(i)).toLowerCase().trim() + "@hospitalalcazar.com")
                     .build();
             employees.add(employee);
         }
