@@ -21,6 +21,7 @@ public class ValidatorEventRegister implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         List<String> events = List.of("beforeCreate");
+
         for (Map.Entry<String, Validator> entry : validators.entrySet()) {
             events.stream()
                     .filter(p -> entry.getKey().startsWith(p))
@@ -29,5 +30,18 @@ public class ValidatorEventRegister implements InitializingBean {
                             p -> validatingRepositoryEventListener
                                     .addValidator(p, entry.getValue()));
         }
+        List<String> events2 = List.of("beforeSave");
+
+
+        for (Map.Entry<String, Validator> entry : validators.entrySet()) {
+            events2.stream()
+                    .filter(p -> entry.getKey().startsWith(p))
+                    .findFirst()
+                    .ifPresent(
+                            p -> validatingRepositoryEventListener
+                                    .addValidator(p, entry.getValue()));
+        }
+
+
     }
 }

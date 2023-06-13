@@ -117,25 +117,33 @@ public class DataInitializer implements CommandLineRunner {
         Room room102 = Room.builder().name("102").medicalFloor(medicalFloor1A).build();
         Room room103 = Room.builder().name("103").medicalFloor(medicalFloor1A).build();
         Room room104 = Room.builder().name("104").medicalFloor(medicalFloor1A).build();
+        Room room105 = Room.builder().name("105").medicalFloor(medicalFloor1A).build();
+        Room room106 = Room.builder().name("106").medicalFloor(medicalFloor1A).build();
 
         Room room201 = Room.builder().name("201").medicalFloor(medicalFloor2A).build();
         Room room202 = Room.builder().name("202").medicalFloor(medicalFloor2A).build();
         Room room203 = Room.builder().name("203").medicalFloor(medicalFloor2A).build();
         Room room204 = Room.builder().name("204").medicalFloor(medicalFloor2A).build();
+        Room room205 = Room.builder().name("205").medicalFloor(medicalFloor2A).build();
+        Room room206 = Room.builder().name("206").medicalFloor(medicalFloor2A).build();
 
-        Room room105 = Room.builder().name("105").medicalFloor(medicalFloor1B).build();
-        Room room106 = Room.builder().name("106").medicalFloor(medicalFloor1B).build();
         Room room107 = Room.builder().name("107").medicalFloor(medicalFloor1B).build();
         Room room108 = Room.builder().name("108").medicalFloor(medicalFloor1B).build();
+        Room room109 = Room.builder().name("109").medicalFloor(medicalFloor1B).build();
+        Room room110 = Room.builder().name("110").medicalFloor(medicalFloor1B).build();
+        Room room111 = Room.builder().name("111").medicalFloor(medicalFloor1B).build();
+        Room room112 = Room.builder().name("112").medicalFloor(medicalFloor1B).build();
 
-        Room room205 = Room.builder().name("205").medicalFloor(medicalFloor2B).build();
-        Room room206 = Room.builder().name("206").medicalFloor(medicalFloor2B).build();
         Room room207 = Room.builder().name("207").medicalFloor(medicalFloor2B).build();
         Room room208 = Room.builder().name("208").medicalFloor(medicalFloor2B).build();
+        Room room209 = Room.builder().name("209").medicalFloor(medicalFloor2B).build();
+        Room room210 = Room.builder().name("210").medicalFloor(medicalFloor2B).build();
+        Room room211 = Room.builder().name("211").medicalFloor(medicalFloor2B).build();
+        Room room212 = Room.builder().name("212").medicalFloor(medicalFloor2B).build();
         List<Room> rooms = List.of(room101, room102, room103, room104,
                 room201, room202, room203, room204,
-                room105, room106, room107, room108,
-                room205, room206, room207, room208);
+                room105, room106, room107, room108,room109, room110, room111, room112,
+                room205, room206, room207, room208, room209, room210, room211, room212);
         roomRepository.saveAll(rooms);
 
 
@@ -202,7 +210,7 @@ public class DataInitializer implements CommandLineRunner {
         });
 
         List<Note> notes = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 50; i++) {
             Note note = Note.builder()
                     .note(faker.lorem().characters(20, 250))
                     .date(faker.date().past(180, TimeUnit.DAYS))
