@@ -1,6 +1,6 @@
 package com.helmuth.hospital.api.validator;
 
-import com.helmuth.hospital.api.entity.Measurement;
+import com.helmuth.hospital.api.model.Measurement;
 import com.helmuth.hospital.api.exception.FormDataException;
 import com.helmuth.hospital.api.repository.MeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;

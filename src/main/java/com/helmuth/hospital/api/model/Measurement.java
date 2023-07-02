@@ -1,7 +1,6 @@
-package com.helmuth.hospital.api.entity;
+package com.helmuth.hospital.api.model;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,17 +11,19 @@ import java.util.Date;
 @Setter
 @Builder
 @Entity
-public class Note {
+public class Measurement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String note;
+    private String measurementValue;
     private Date date;
+
+    @ManyToOne
+    private MeasurementType measurementType;
 
     @ManyToOne
     private Patient patient;
 
     @ManyToOne
     private Employee employee;
-
 }

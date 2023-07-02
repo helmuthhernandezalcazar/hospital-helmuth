@@ -1,4 +1,4 @@
-package com.helmuth.hospital.api.entity;
+package com.helmuth.hospital.api.model;
 
 import lombok.*;
 

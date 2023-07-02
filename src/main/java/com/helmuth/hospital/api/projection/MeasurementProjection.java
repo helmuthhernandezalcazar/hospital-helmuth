@@ -1,7 +1,6 @@
 package com.helmuth.hospital.api.projection;
 
-import com.helmuth.hospital.api.entity.Measurement;
-import com.helmuth.hospital.api.entity.MeasurementType;
+import com.helmuth.hospital.api.model.Measurement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 

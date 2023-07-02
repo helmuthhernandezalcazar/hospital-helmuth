@@ -1,4 +1,4 @@
-package com.helmuth.hospital.api.entity;
+package com.helmuth.hospital.api.model;
 
 import lombok.*;
 
@@ -11,19 +11,17 @@ import java.util.Date;
 @Setter
 @Builder
 @Entity
-public class Measurement {
+public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String measurementValue;
+    private String note;
     private Date date;
-
-    @ManyToOne
-    private MeasurementType measurementType;
 
     @ManyToOne
     private Patient patient;
 
     @ManyToOne
     private Employee employee;
+
 }

@@ -1,8 +1,6 @@
 package com.helmuth.hospital.api.projection;
 
-import com.helmuth.hospital.api.entity.Patient;
-import com.helmuth.hospital.api.entity.Room;
-import com.helmuth.hospital.api.entity.Triage;
+import com.helmuth.hospital.api.model.Patient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 

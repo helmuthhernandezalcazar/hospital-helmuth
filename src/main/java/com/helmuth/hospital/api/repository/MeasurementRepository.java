@@ -1,14 +1,12 @@
 package com.helmuth.hospital.api.repository;
 
-import com.helmuth.hospital.api.entity.Measurement;
-import com.helmuth.hospital.api.entity.MeasurementType;
-import com.helmuth.hospital.api.entity.Note;
-import com.helmuth.hospital.api.entity.Patient;
+import com.helmuth.hospital.api.model.Measurement;
+import com.helmuth.hospital.api.model.MeasurementType;
+import com.helmuth.hospital.api.model.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RepositoryRestResource

@@ -1,6 +1,6 @@
 package com.helmuth.hospital.api.validator;
 
-import com.helmuth.hospital.api.entity.Patient;
+import com.helmuth.hospital.api.model.Patient;
 import com.helmuth.hospital.api.exception.FormDataException;
 import com.helmuth.hospital.api.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component("beforeCreatePatient")

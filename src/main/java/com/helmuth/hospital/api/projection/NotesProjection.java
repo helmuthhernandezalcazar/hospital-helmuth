@@ -1,7 +1,7 @@
 package com.helmuth.hospital.api.projection;
 
 
-import com.helmuth.hospital.api.entity.Note;
+import com.helmuth.hospital.api.model.Note;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
