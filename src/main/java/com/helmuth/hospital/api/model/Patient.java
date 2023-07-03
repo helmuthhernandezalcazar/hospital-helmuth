@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -27,11 +28,12 @@ public class Patient {
     private Date dischargeDate;
     private Boolean discharged;
     private String symptoms;
+    @Size
     private String medicalDiagnosis;
 
     @ManyToOne
     private Triage triage;
-    @OneToOne
+    @OneToOne(optional = false)
     private Room room;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
